@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertToVND } from '@/utils/format';
+import { convertToVND } from '@/utils/currency';
 
 export type DebtItemProps = {
   name: string;

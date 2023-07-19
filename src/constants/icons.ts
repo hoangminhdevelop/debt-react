@@ -1,4 +1,4 @@
-const iconList = [
+export const iconList = [
   { emoji: '👩🏻‍🦰', label: 'Woman with Red Hair', value: 0 },
   { emoji: '🧑🏻‍🦰', label: 'Person with Red Hair', value: 1 },
   { emoji: '👵🏻', label: 'Old Woman', value: 2 },

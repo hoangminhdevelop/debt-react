@@ -11,7 +11,7 @@ import clsx from 'clsx';
 type HeaderProps = React.JSX.IntrinsicElements['header'];
 
 const navLinkStyles =
-  'h-full decoration-black relative after:absolute after:bottom-[-2px] after:left-0 after:w-full after:h-[2px] after:bg-cover';
+  'inline-block h-[100%] decoration-black relative after:absolute after:bottom-[-2px] after:left-[50%] after:translate-x-[-50%] after:w-[120%] after:h-[.5rem] after:bg-cover';
 
 const Header = ({ className, ...props }: HeaderProps) => {
   return (
