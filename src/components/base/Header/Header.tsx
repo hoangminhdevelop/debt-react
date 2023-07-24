@@ -3,10 +3,10 @@ import { twMerge } from 'tailwind-merge';
 
 // -- Components
 import logo from '@/assets/react.svg';
-import Button from '../../ui-kits/Button/Button';
 import { Link, NavLink } from 'react-router-dom';
 import { Routers } from '@/routes';
 import clsx from 'clsx';
+import { Button } from '@/components/ui/button';
 
 type HeaderProps = React.JSX.IntrinsicElements['header'];
 
@@ -61,7 +61,7 @@ const Header = ({ className, ...props }: HeaderProps) => {
         </Button>
       </div> */}
       {/** Profile */}
-      <Button size="md" color="secondary">
+      <Button size="sm" color="secondary">
         Profile
       </Button>
     </header>
