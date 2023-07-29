@@ -5,6 +5,7 @@ import MainLayout from './layouts/MainLayout';
 import LandingPage from '@/pages/LandingPage';
 import Home from '@/pages/Home/Home';
 import History from '@/pages/History';
+import CheckAuth from './components/auth/CheckAuth/CheckAuth';
 
 export enum Routers {
   LandingPage = '/',
@@ -23,11 +24,19 @@ export const router = createBrowserRouter([
       },
       {
         path: Routers.Home,
-        element: <Home />,
+        element: (
+          <CheckAuth>
+            <Home />
+          </CheckAuth>
+        ),
       },
       {
         path: Routers.History,
-        element: <History />,
+        element: (
+          <CheckAuth>
+            <History />
+          </CheckAuth>
+        ),
       },
       {
         path: Routers.Detail,

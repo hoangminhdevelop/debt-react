@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{   
+   .p-common{
+      @apply p-3
+   }
+   
+   .h-header{
+      @apply h-[50px]
+   }
+
+   .mt-page{
+      @apply mt-[50px]
+   }
+
+}
