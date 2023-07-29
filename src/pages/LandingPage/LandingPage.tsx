@@ -1,6 +1,15 @@
-import LoginForm from '@/components/forms/LoginForm';
+import LoginForm from '@/components/forms/login-form';
+import { useAuthContext } from '@/contexts/auth-context/useAuthContext';
+import { Routers } from '@/routes';
+import { Navigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const { isAuthenticated } = useAuthContext();
+  console.log('isAuthenticated :>> ', isAuthenticated);
+  if (isAuthenticated) {
+    return <Navigate to={Routers.Home} />;
+  }
+
   return (
     <div className="relative">
       <div className="w-full h-[100vh] md:w-1/2">
@@ -11,6 +20,7 @@ const LandingPage = () => {
         />
       </div>
       <div className="absolute w-4/5 top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] md:w-2/5 md:left-[75%]">
+        {/* <CreateDebt/> */}
         <LoginForm />
       </div>
     </div>

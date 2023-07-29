@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -10,10 +13,14 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
+import { Routers } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginFormSchema, loginSchema } from './LoginForm.schema';
+import authService from '@/services/authService';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -22,8 +29,15 @@ const LoginForm = () => {
     },
   });
 
+  const { mutate } = useMutation({
+    mutationFn: authService.login,
+    onSuccess() {
+      navigate(Routers.Home);
+    },
+  });
+
   const onSubmit = (formValues: LoginFormSchema) => {
-    console.log(' data :>> ', formValues);
+    mutate(formValues);
   };
 
   return (
