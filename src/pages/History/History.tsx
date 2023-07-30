@@ -8,25 +8,17 @@ const History = () => {
   const { id } = useParams();
   const { isAuthenticated } = useAuthContext();
 
-  const { data: allHistory } = useQuery({
+  const { data } = useQuery({
     queryKey: ['query-history'],
-    queryFn: historyService.getHistoryList,
-    enabled: isAuthenticated && !id,
+    queryFn: () => historyService.getHistoryList({ debtId: Number(id) }),
+    enabled: isAuthenticated,
   });
-
-  const { data: historyListByID } = useQuery({
-    queryKey: ['clear', id],
-    queryFn: () => historyService.getHistoryListById(Number(id)),
-    enabled: isAuthenticated && !!id,
-  });
-
-  const historyList = id ? historyListByID : allHistory;
 
   return (
     <div className="mt-page p-common">
       <h1>History</h1>
       <div className="flex flex-col gap-3">
-        {historyList?.map((history) => {
+        {data?.map((history) => {
           return <HistoryItem key={history.id} data={history} />;
         })}
       </div>

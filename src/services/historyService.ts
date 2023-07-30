@@ -2,16 +2,20 @@ import { APIResult } from '@/types/service';
 import { axiosPrivateCall } from './axiosService';
 import { IHistory } from '@/types/history';
 
+interface FilterHistory {
+  debtId?: number;
+}
+
 class HistoryService {
-  async getHistoryList() {
+  async getHistoryList({ debtId, ...input }: FilterHistory) {
     const result = await axiosPrivateCall().get<APIResult<IHistory[]>>(
       '/history',
-    );
-    return result.data.data;
-  }
-  async getHistoryListById(id: number) {
-    const result = await axiosPrivateCall().get<APIResult<IHistory[]>>(
-      `/history/${id}`,
+      {
+        params: {
+          debt: isNaN(Number(debtId)) ? undefined : Number(debtId),
+          ...input,
+        },
+      },
     );
     return result.data.data;
   }
