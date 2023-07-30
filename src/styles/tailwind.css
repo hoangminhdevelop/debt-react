@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{   
-   .p-common{
-      @apply p-3
+@layer base {
+   h1{
+      @apply text-2xl font-bold
    }
-   
+}
+
+@layer components{   
    .h-header{
       @apply h-[50px]
    }

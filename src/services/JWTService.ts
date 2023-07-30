@@ -1,7 +1,7 @@
 import jwtDecode, { JwtPayload } from 'jwt-decode';
-import { axiosCall } from './axiosService';
 import { APIResult } from '@/types/service';
 import { UserInfo } from '@/types/auth';
+import { SERVER_URL } from '@/constants/common';
 
 interface JWTServerPayload {
   payload: UserInfo;
@@ -23,9 +23,9 @@ export const decodeToken = (token: string) => {
   return decoded;
 };
 
-export const setAccessToken = (accessToken: string) => {
-  accessToken = accessToken;
-  const decoded = jwtDecode<JwtPayload & JWTServerPayload>(accessToken);
+export const setAccessToken = (accessTokenInput: string) => {
+  accessToken = accessTokenInput;
+  const decoded = jwtDecode<JwtPayload & JWTServerPayload>(accessTokenInput);
   setRefreshTokenTimeOut((decoded.exp as number) - (decoded.iat as number));
 };
 
@@ -41,17 +41,13 @@ export const setRefreshTokenTimeOut = (delay: number) => {
 
 export const getRefreshToken = async () => {
   try {
-    const data = await axiosCall.get<APIResult<RefreshTokenResponse>>(
-      '/auth/refreshToken',
-      {
-        withCredentials: true,
-      },
-    );
+    const result = (await fetch(`${SERVER_URL}/auth/refreshToken`, {
+      credentials: 'include',
+    }).then((res) => res.json())) as APIResult<RefreshTokenResponse>;
     // set new access token
-    setAccessToken(data.data.data.token);
-    return data.data.data.token;
+    setAccessToken(result.data.token);
+    return result.data.token;
   } catch (error) {
-    console.log('error :>> ', error);
     return undefined;
   }
 };

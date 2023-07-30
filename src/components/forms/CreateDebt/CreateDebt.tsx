@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
+
+// -- Components --
 import {
   Dialog,
   DialogContent,
@@ -22,11 +25,20 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import SelectCustom from '@/components/ui/select-custom';
 
+// -- Utils  --
+
 import { CreateDebtSchema, createDebtSchema } from './CreateDebt.schema';
 import debtService, { CreateDebtInput } from '@/services/debtService';
 import { iconOptions } from '@/constants/icons';
+import {
+  CREATE_DEBT_FAILED,
+  CREATE_DEBT_SUCCESSFULLY,
+} from '@/constants/message';
+import { useState } from 'react';
 
 const CreateDebt = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const form = useForm<CreateDebtSchema>({
     resolver: zodResolver(createDebtSchema),
     defaultValues: {
@@ -40,12 +52,18 @@ const CreateDebt = () => {
     mutationFn: (input: CreateDebtInput) => debtService.createDebt(input),
   });
 
-  const onSubmit = (data: CreateDebtSchema) => {
-    console.log('data :>> ', data);
+  const onSubmit = async (dataForm: CreateDebtSchema) => {
+    try {
+      mutate(dataForm);
+      setIsOpen(false);
+      toast(CREATE_DEBT_SUCCESSFULLY, { type: 'success' });
+    } catch (error) {
+      toast(CREATE_DEBT_FAILED, { type: 'error' });
+    }
   };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog open={isOpen}>
+      <DialogTrigger asChild onClick={() => setIsOpen(!isOpen)}>
         <Button>Create debt</Button>
       </DialogTrigger>
 
@@ -61,12 +79,9 @@ const CreateDebt = () => {
               name="debtName"
               render={({ field }) => (
                 <FormItem className="mb-2">
-                  <Label>debtName</Label>
+                  <Label>Debt name</Label>
                   <FormControl>
-                    <Input
-                      placeholder="Enter your username or email"
-                      {...field}
-                    />
+                    <Input placeholder="Enter the debt name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

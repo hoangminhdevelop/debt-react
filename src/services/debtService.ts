@@ -1,5 +1,5 @@
-import { AxiosResponse } from 'axios';
 import { axiosPrivateCall } from './axiosService';
+import { TDebt } from '@/types/debt';
 import { APIResult } from '@/types/service';
 
 export interface CreateDebtInput {
@@ -11,7 +11,15 @@ interface CreateDebtResponse {}
 
 class DebtService {
   createDebt(input: CreateDebtInput) {
-    return axiosPrivateCall.post<APIResult<CreateDebtResponse>>('/debt', input);
+    return axiosPrivateCall().post<APIResult<CreateDebtResponse>>(
+      '/debt',
+      input,
+    );
+  }
+
+  async getDebtList() {
+    const result = await axiosPrivateCall().get<APIResult<TDebt[]>>('/debt');
+    return result.data.data;
   }
 }
 

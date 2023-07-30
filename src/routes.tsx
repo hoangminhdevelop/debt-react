@@ -11,7 +11,6 @@ export enum Routers {
   LandingPage = '/',
   Home = '/home',
   History = '/history',
-  Detail = '/detail',
 }
 
 export const router = createBrowserRouter([
@@ -31,7 +30,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: Routers.History,
+        path: `${Routers.History}`,
         element: (
           <CheckAuth>
             <History />
@@ -39,11 +38,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: Routers.Detail,
+        path: `${Routers.History}/:id`,
         element: (
-          <>
-            <h1>detail</h1>
-          </>
+          <CheckAuth>
+            <History />
+          </CheckAuth>
         ),
       },
     ],
