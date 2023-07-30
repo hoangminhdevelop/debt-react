@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const { isAuthenticated } = useAuthContext();
-  console.log('isAuthenticated :>> ', isAuthenticated);
   if (isAuthenticated) {
     return <Navigate to={Routers.Home} />;
   }

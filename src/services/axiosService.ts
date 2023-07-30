@@ -1,18 +1,19 @@
 import axios from 'axios';
 import { SERVER_URL } from '@/constants/common';
+import { getAccessToken } from './JWTService';
 
-export const axiosCall = axios.create({
-  baseURL: SERVER_URL,
-});
-
-const axiosCallWithAuth = () => {
-  // const accessToken = getAccessToken();
+export const axiosCall = () => {
   return axios.create({
     baseURL: SERVER_URL,
-    headers: {
-      // Authorization: `Bearer ${accessToken}`,
-    },
   });
 };
 
-export const axiosPrivateCall = axiosCallWithAuth();
+export const axiosPrivateCall = () => {
+  const accessToken = getAccessToken();
+  return axios.create({
+    baseURL: SERVER_URL,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+};

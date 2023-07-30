@@ -18,7 +18,7 @@ interface RefreshToken {
 }
 class AuthService {
   async login(input: LoginInput) {
-    const { data } = await axiosCall.post<APIResult<LoginResult>>(
+    const { data } = await axiosCall().post<APIResult<LoginResult>>(
       '/auth/login',
       input,
       {
@@ -32,7 +32,7 @@ class AuthService {
   }
 
   async refreshToken() {
-    return await axiosCall.get<AxiosResponse<RefreshToken>>(
+    return await axiosCall().get<AxiosResponse<RefreshToken>>(
       '/auth/refreshToken',
     );
   }
