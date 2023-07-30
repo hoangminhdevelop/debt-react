@@ -26,7 +26,7 @@ const Home = () => {
             <span>You have {data?.length ?? 0} debts</span>
           </div>
 
-          <Card className="p-common flex flex-col gap-2 ">
+          <Card className="p-common flex flex-col md:flex-row md:flex-wrap">
             {isLoading &&
               [...new Array(5)].map((_, id) => {
                 return <DebtItemSkeleton key={id} />;

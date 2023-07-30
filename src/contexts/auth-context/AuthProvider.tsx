@@ -2,6 +2,7 @@ import React, {
   Dispatch,
   SetStateAction,
   createContext,
+  useEffect,
   useState,
 } from 'react';
 
@@ -58,6 +59,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(false); // Update the loading state after authentication check
     }
   };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const value = {
     user,
