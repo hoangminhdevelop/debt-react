@@ -1,9 +1,16 @@
 import { APIResult } from '@/types/service';
 import { axiosPrivateCall } from './axiosService';
-import { IHistory } from '@/types/history';
+import { HistoryType, IHistory } from '@/types/history';
 
 interface FilterHistory {
   debtId?: number;
+}
+
+export interface CreateHistoryInput {
+  debtId: number;
+  type: HistoryType;
+  amount: number;
+  reason: string;
 }
 
 class HistoryService {
@@ -16,6 +23,14 @@ class HistoryService {
           ...input,
         },
       },
+    );
+    return result.data.data;
+  }
+
+  async createHistory(input: CreateHistoryInput) {
+    const result = await axiosPrivateCall().post<APIResult<IHistory[]>>(
+      '/history',
+      input,
     );
     return result.data.data;
   }

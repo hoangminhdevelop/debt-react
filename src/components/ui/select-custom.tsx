@@ -37,7 +37,7 @@ const SelectCustom = ({
           </SelectTrigger>
         </FormControl>
         <SelectContent>
-          <ScrollArea className="w-full h-[200px]">
+          <ScrollArea className="w-full max-h-[200px]">
             {options.map((option) => {
               return (
                 <SelectItem key={option.label} value={option.value}>

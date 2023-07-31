@@ -7,7 +7,7 @@ import { TDebt } from '@/types/debt';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import { Routers } from '@/routes';
-import { convertToVND } from '@/utils/format';
+import { convertToVND } from '@/utils/currency';
 import { cn } from '@/utils/tailwind';
 
 type DebtItemProps = Omit<HTMLProps<HTMLDivElement>, 'data'> & {
