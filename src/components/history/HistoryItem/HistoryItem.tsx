@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { Card } from '@/components/ui/card';
 import { HistoryType, IHistory } from '@/types/history';
 import { format } from '@/utils/datetime';
-import { convertToVND } from '@/utils/format';
+import { convertToVND } from '@/utils/currency';
 import { Skeleton } from '@/components/ui/skeleton';
 
 type HistoryItemProps = {
