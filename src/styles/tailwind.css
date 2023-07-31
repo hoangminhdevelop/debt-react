@@ -6,6 +6,10 @@
    h1{
       @apply text-2xl font-bold
    }
+
+   .bg-skeleton{
+      @apply bg-slate-200
+   }
 }
 
 @layer components{   
