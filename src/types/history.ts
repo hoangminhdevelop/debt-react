@@ -1,4 +1,5 @@
 export enum HistoryType {
+  All = 'All',
   Decrement = 'DECREMENT',
   Increment = 'INCREMENT',
 }
