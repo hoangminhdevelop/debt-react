@@ -62,8 +62,8 @@ const CreateDebt = () => {
     }
   };
   return (
-    <Dialog open={isOpen}>
-      <DialogTrigger asChild onClick={() => setIsOpen(!isOpen)}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
         <Button>Create debt</Button>
       </DialogTrigger>
 

@@ -18,7 +18,7 @@ const DebtItem = ({ data, className }: DebtItemProps) => {
   const icon = iconList.find((i) => i.value === data.icon) ?? iconList[0];
 
   return (
-    <div className="w-full p-2 md:w-1/2 lg:w-1/3">
+    <div className="w-full">
       <Link to={`${Routers.History}/${data.id}`}>
         <Card className={cn('flex items-center p-common', className)}>
           <span className="text-2xl">{icon.emoji}</span>
@@ -41,9 +41,9 @@ const DebtItemSkeleton = () => {
   return (
     <Card className="p-common">
       <Skeleton className="flex items-center gap-4">
-        <div className="rounded-full bg-slate-200 h-8 w-8"></div>
-        <div className="rounded-lg w-[40%] bg-slate-200 h-5"></div>
-        <div className="ml-auto rounded-lg w-[20%] bg-slate-200 h-5"></div>
+        <div className="rounded-full bg-skeleton h-8 w-8"></div>
+        <div className="rounded-lg w-[40%] bg-skeleton00 h-5"></div>
+        <div className="ml-auto rounded-lg w-[20%] bg-skeleton h-5"></div>
       </Skeleton>
     </Card>
   );
