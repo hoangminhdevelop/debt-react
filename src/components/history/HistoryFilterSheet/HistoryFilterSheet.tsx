@@ -12,7 +12,10 @@ import {
 } from '@/components/ui/sheet';
 import { HistoryFilterDataForm } from '@/components/forms/HistoryFilterForm/HistoryFilterForm.schema';
 
-type HistoryFilterSheetProps = HTMLProps<HTMLDivElement> &
+type HistoryFilterSheetProps = Omit<
+  HTMLProps<HTMLDivElement>,
+  'onSubmit' | 'defaultValue'
+> &
   HistoryFilterFormProps;
 
 const HistoryFilterSheet = ({
@@ -21,7 +24,7 @@ const HistoryFilterSheet = ({
 }: HistoryFilterSheetProps) => {
   const [isOpen, setOpen] = useState(false);
 
-  const _onSubmit = (data?: HistoryFilterDataForm) => {
+  const _onSubmit = (data: HistoryFilterDataForm) => {
     onSubmit(data);
     setOpen(false);
   };

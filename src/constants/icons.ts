@@ -1,4 +1,4 @@
-export const iconList = [
+export const ICON_LIST = [
   { emoji: '💰', label: 'Default', value: 'default' },
   { emoji: '👩🏻‍🦰', label: 'Woman with Red Hair', value: 'woman-with-red-hair' },
   { emoji: '🧑🏻‍🦰', label: 'Person with Red Hair', value: 'person-with-red-hair' },
@@ -21,7 +21,7 @@ export const iconList = [
   { emoji: '🦄', label: 'Unicorn', value: 'unicorn' },
 ];
 
-export const iconOptions = iconList.map((icon) => {
+export const iconOptions = ICON_LIST.map((icon) => {
   return {
     label: `${icon.label} ${icon.emoji}`,
     value: icon.value,

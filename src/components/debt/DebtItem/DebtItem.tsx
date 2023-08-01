@@ -2,26 +2,26 @@ import { HTMLProps } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Card } from '@/components/ui/card';
-import { iconList } from '@/constants/icons';
 import { TDebt } from '@/types/debt';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import { Routers } from '@/routes';
 import { convertToVND } from '@/utils/currency';
 import { cn } from '@/utils/tailwind';
+import { getIcon } from '@/helpers/icon';
 
 type DebtItemProps = Omit<HTMLProps<HTMLDivElement>, 'data'> & {
   data: TDebt;
 };
 
 const DebtItem = ({ data, className }: DebtItemProps) => {
-  const icon = iconList.find((i) => i.value === data.icon) ?? iconList[0];
+  const { emoji } = getIcon(data.icon);
 
   return (
     <div className="w-full">
       <Link to={`${Routers.History}/${data.id}`}>
         <Card className={cn('flex items-center p-common', className)}>
-          <span className="text-2xl">{icon.emoji}</span>
+          <span className="text-2xl">{emoji}</span>
           <div className="ml-3">{data.debtName}</div>
           <span
             className={cn('ml-auto font-medium', {

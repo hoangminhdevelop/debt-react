@@ -29,10 +29,10 @@ import {
   CreateHistorySchema,
   createHistorySchema,
 } from './CreateHistory.schema';
-import { historyTypeOptions } from '@/constants/history';
 import { HistoryType } from '@/types/history';
 import { CreateHistoryInput, historyService } from '@/services/historyService';
 import { CREATE_HISTORY_SUCCESSFULLY } from '@/constants/message';
+import { HISTORY_TYPE_OPTIONS } from '@/constants/options';
 
 const CreateHistory = () => {
   const { id } = useParams();
@@ -82,7 +82,7 @@ const CreateHistory = () => {
                     <FormControl>
                       <SelectCustom
                         defaultValue={field.value}
-                        options={historyTypeOptions}
+                        options={HISTORY_TYPE_OPTIONS}
                         onChange={field.onChange}
                       />
                     </FormControl>

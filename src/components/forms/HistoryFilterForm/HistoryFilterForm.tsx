@@ -1,7 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 
@@ -15,66 +13,80 @@ import {
 import { Label } from '@/components/ui/label';
 import SelectCustom from '@/components/ui/select-custom';
 
-import { historyTypeFullOptions } from '@/constants/history';
-import { CREATE_HISTORY_SUCCESSFULLY } from '@/constants/message';
-
 import {
   HistoryFilterDataForm,
   historyFilterFormSchema,
 } from './HistoryFilterForm.schema';
 import { DatePickerWithRange } from '@/components/ui/date-range-picker';
-import { endOfMonth, startOfMonth } from 'date-fns';
+import { HISTORY_TYPE_ALL_OPTIONS, ORDER_OPTIONS } from '@/constants/options';
+import { FilterHistory } from '@/services/historyService';
 
 export type HistoryFilterFormProps = {
-  onSubmit: (data?: HistoryFilterDataForm) => void;
+  onSubmit: (data: HistoryFilterDataForm) => void;
+  defaultValue: FilterHistory;
 };
 
-const HistoryFilterForm = ({ onSubmit }: HistoryFilterFormProps) => {
-  const { id } = useParams();
-
+const HistoryFilterForm = ({
+  onSubmit,
+  defaultValue,
+}: HistoryFilterFormProps) => {
   const form = useForm<HistoryFilterDataForm>({
     resolver: zodResolver(historyFilterFormSchema),
   });
 
-  const _onSubmit = async (dataForm: HistoryFilterDataForm) => {
-    try {
-      if (!id) return;
-      onSubmit(dataForm);
-    } catch (error) {
-      toast(CREATE_HISTORY_SUCCESSFULLY, { type: 'error' });
-      onSubmit();
-    }
-  };
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(_onSubmit)}>
-        <FormField
-          control={form.control}
-          name="type"
-          defaultValue={historyTypeFullOptions[0].value}
-          render={({ field }) => {
-            return (
-              <FormItem className="mb-common">
-                <Label>type:</Label>
-                <FormControl>
-                  <SelectCustom
-                    defaultValue={field.value}
-                    options={historyTypeFullOptions}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="flex">
+          <FormField
+            control={form.control}
+            name="order"
+            defaultValue={defaultValue.order}
+            render={({ field }) => {
+              return (
+                <FormItem className="mb-common w-1/3 mr-common">
+                  <Label>Order:</Label>
+                  <FormControl>
+                    <SelectCustom
+                      defaultValue={field.value}
+                      options={ORDER_OPTIONS}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+          <FormField
+            control={form.control}
+            name="type"
+            defaultValue={defaultValue.type}
+            render={({ field }) => {
+              return (
+                <FormItem className="mb-common w-1/3">
+                  <Label>type:</Label>
+                  <FormControl>
+                    <SelectCustom
+                      placeholder="Select type"
+                      defaultValue={field.value}
+                      options={HISTORY_TYPE_ALL_OPTIONS}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="range"
           defaultValue={{
-            from: startOfMonth(new Date()),
-            to: endOfMonth(new Date()),
+            from: defaultValue.start,
+            to: defaultValue.end,
           }}
           render={({ field }) => {
             return (
@@ -92,9 +104,7 @@ const HistoryFilterForm = ({ onSubmit }: HistoryFilterFormProps) => {
           }}
         />
 
-        <Button disabled={false} type="submit">
-          Submit filter
-        </Button>
+        <Button type="submit">Submit filter</Button>
       </form>
     </Form>
   );
