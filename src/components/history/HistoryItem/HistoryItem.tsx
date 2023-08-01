@@ -1,24 +1,33 @@
 import clsx from 'clsx';
 import { Card } from '@/components/ui/card';
 import { HistoryType, IHistory } from '@/types/history';
-import { format } from '@/utils/datetime';
 import { convertToVND } from '@/utils/currency';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getIcon } from '@/helpers/icon';
+import { formatDateTime } from '@/utils/datetime';
 
 type HistoryItemProps = {
   data: IHistory;
 };
 
 export const HistoryItem = ({ data }: HistoryItemProps) => {
+  const { emoji } = getIcon(data.debt.icon);
   return (
     <div className="w-full">
-      <Card className="p-common flex gap-3 items-center">
-        <div className="flex flex-col">
-          <span>Debt: {data.debtId}</span>
+      <Card className="p-common flex gap-3 items-start">
+        <div className="flex flex-col w-2/3">
+          <span>
+            Debt:
+            <b>
+              &nbsp;
+              {data.debt.debtName}&nbsp;
+              {emoji}
+            </b>
+          </span>
           <span>Reason: {data.reason}</span>
         </div>
         <div className="ml-auto flex flex-col">
-          <span className="text-sm">{format(data.createdAt)}</span>
+          <span className="text-sm">{formatDateTime(data.createdAt)}</span>
           <span
             className={clsx('font-bold', {
               'text-green-500': data.type === HistoryType.Increment,

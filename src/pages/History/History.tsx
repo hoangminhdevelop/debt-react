@@ -1,41 +1,82 @@
-import CreateHistory from '@/components/forms/CreateHistory';
-import { HistoryFilter } from '@/components/history/HistoryFilter';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { endOfDay, endOfMonth, startOfDay, startOfMonth } from 'date-fns';
+
 import {
   HistoryItem,
   HistoryItemSkeleton,
 } from '@/components/history/HistoryItem';
 import { useAuthContext } from '@/contexts/auth-context/useAuthContext';
-import { historyService } from '@/services/historyService';
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { FilterHistory, historyService } from '@/services/historyService';
+import HistoryFilterForm from '@/components/forms/HistoryFilterForm/HistoryFilterForm';
+import { Card } from '@/components/ui/card';
+import HistoryFilterSheet from '@/components/history/HistoryFilterSheet/HistoryFilterSheet';
+import { HistoryFilterDataForm } from '@/components/forms/HistoryFilterForm/HistoryFilterForm.schema';
+import CreateHistory from '@/components/forms/CreateHistory/CreateHistory';
+
+import { HistoryType } from '@/types/history';
+import { Order } from '@/types/common';
 
 const History = () => {
   const { id } = useParams();
   const { isAuthenticated } = useAuthContext();
 
+  const [historyParams, setHistoryParam] = useState<FilterHistory>({
+    debtId: Number(id),
+    start: startOfDay(startOfMonth(new Date())),
+    end: endOfDay(endOfMonth(new Date())),
+    order: Order.Desc,
+  });
+
   const { data, isLoading } = useQuery({
-    queryKey: ['query-history'],
-    queryFn: () => historyService.getHistoryList({ debtId: Number(id) }),
+    queryKey: ['query-history', historyParams],
+    queryFn: () => historyService.getHistoryList(historyParams),
     enabled: isAuthenticated,
   });
 
+  const onSubmitFilter = (filterForm: HistoryFilterDataForm) => {
+    setHistoryParam({
+      ...historyParams,
+      start: filterForm.range.from,
+      end: filterForm.range.to,
+      type: filterForm.type === HistoryType.All ? undefined : filterForm.type,
+      order: filterForm.order,
+    });
+  };
+
   return (
     <div className="mt-page p-common">
-      <div className="flex justify-between items-center">
-        <h1>History</h1>
+      <div className="flex justify-end items-center gap-2">
         <CreateHistory />
+        <HistoryFilterSheet
+          defaultValue={historyParams}
+          className="block md:hidden"
+          onSubmit={onSubmitFilter}
+        />
       </div>
-      <div className="flex flex-col mt-common">
-        <HistoryFilter className="w-full h-[10vh]" />
-        <div className="w-full grid gap-3 grid-cols-1 mt-common">
-          {isLoading &&
-            [...new Array(6)].map((_, id) => {
-              return <HistoryItemSkeleton key={id} />;
-            })}
+      <div className="flex flex-col mt-common md:flex-row-reverse md:gap-3">
+        <div className="hidden w-full md:block md:w-1/2 lg:w-2/3">
+          <h2 className="mb-common">Filter</h2>
+          <Card className="p-common w-full">
+            <HistoryFilterForm
+              defaultValue={historyParams}
+              onSubmit={onSubmitFilter}
+            />
+          </Card>
+        </div>
+        <div className="w-full">
+          <h2 className="mb-common">History list</h2>
+          <div className="w-full grid gap-3 grid-cols-1 mt-common">
+            {isLoading &&
+              [...new Array(6)].map((_, id) => {
+                return <HistoryItemSkeleton key={id} />;
+              })}
 
-          {data?.map((history) => {
-            return <HistoryItem key={history.id} data={history} />;
-          })}
+            {data?.map((history) => {
+              return <HistoryItem key={history.id} data={history} />;
+            })}
+          </div>
         </div>
       </div>
     </div>

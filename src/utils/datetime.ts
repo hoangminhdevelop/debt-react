@@ -1,3 +1,5 @@
-export const format = (date: string | Date) => {
-  return new Intl.DateTimeFormat().format(new Date(date));
+import { format } from 'date-fns';
+
+export const formatDateTime = (date: string | Date) => {
+  return format(new Date(date), 'dd/MM/yyyy hh-mm');
 };

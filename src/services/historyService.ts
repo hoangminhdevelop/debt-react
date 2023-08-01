@@ -1,9 +1,14 @@
 import { APIResult } from '@/types/service';
 import { axiosPrivateCall } from './axiosService';
 import { HistoryType, IHistory } from '@/types/history';
+import { Order } from '@/types/common';
 
-interface FilterHistory {
+export interface FilterHistory {
   debtId?: number;
+  start: Date;
+  end: Date;
+  type?: HistoryType;
+  order?: Order;
 }
 
 export interface CreateHistoryInput {

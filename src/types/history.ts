@@ -1,4 +1,7 @@
+import { TDebt } from './debt';
+
 export enum HistoryType {
+  All = 'All',
   Decrement = 'DECREMENT',
   Increment = 'INCREMENT',
 }
@@ -11,4 +14,5 @@ export interface IHistory {
   createdAt: string;
   debtId: number;
   userId: number;
+  debt: TDebt;
 }
