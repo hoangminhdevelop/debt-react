@@ -24,7 +24,7 @@ class HistoryService {
       '/history',
       {
         params: {
-          debt: isNaN(Number(debtId)) ? undefined : Number(debtId),
+          debtId: isNaN(Number(debtId)) ? undefined : Number(debtId),
           ...input,
         },
       },

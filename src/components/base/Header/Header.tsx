@@ -17,9 +17,15 @@ const Header = ({ className, ...props }: HeaderProps) => {
       )}
       {...props}
     >
-      <Link to={Routers.Home}>
-        <h1 className="text-white">Home</h1>
-      </Link>
+      <div className="flex gap-2">
+        <Link to={Routers.Home}>
+          <h2 className="text-white">Home</h2>
+        </Link>
+        <Link to={Routers.History}>
+          <h2 className="text-white">History</h2>
+        </Link>
+      </div>
+
       <Profile />
     </header>
   );

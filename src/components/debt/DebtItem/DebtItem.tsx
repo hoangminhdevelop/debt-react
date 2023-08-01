@@ -9,6 +9,8 @@ import { Routers } from '@/routes';
 import { convertToVND } from '@/utils/currency';
 import { cn } from '@/utils/tailwind';
 import { getIcon } from '@/helpers/icon';
+import { X } from 'lucide-react';
+import DeleteDebt from '@/components/forms/DeleteDebt';
 
 type DebtItemProps = Omit<HTMLProps<HTMLDivElement>, 'data'> & {
   data: TDebt;
@@ -19,20 +21,23 @@ const DebtItem = ({ data, className }: DebtItemProps) => {
 
   return (
     <div className="w-full">
-      <Link to={`${Routers.History}/${data.id}`}>
-        <Card className={cn('flex items-center p-common', className)}>
-          <span className="text-2xl">{emoji}</span>
+      <Card className={cn('flex items-center p-common', className)}>
+        <span className="text-2xl">{emoji}</span>
+        <Link to={`${Routers.History}/${data.id}`}>
           <div className="ml-3">{data.debtName}</div>
+        </Link>
+        <div className="ml-auto flex items-center gap-2">
           <span
-            className={cn('ml-auto font-medium', {
+            className={cn('font-medium', {
               'text-green-500': data.amount > 0,
               'text-red-500': data.amount <= 0,
             })}
           >
             {convertToVND(data.amount)}
           </span>
-        </Card>
-      </Link>
+          <DeleteDebt data={data} />
+        </div>
+      </Card>
     </div>
   );
 };

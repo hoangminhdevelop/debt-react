@@ -1,4 +1,4 @@
-import { axiosPrivateCall } from './axiosService';
+import { axiosCall, axiosPrivateCall } from './axiosService';
 import { TDebt } from '@/types/debt';
 import { APIResult } from '@/types/service';
 
@@ -20,6 +20,11 @@ class DebtService {
   async getDebtList() {
     const result = await axiosPrivateCall().get<APIResult<TDebt[]>>('/debt');
     return result.data.data;
+  }
+
+  async deleteDebtById(id: number) {
+    const result = await axiosPrivateCall().delete(`/debt/${id}`);
+    return result.data;
   }
 }
 

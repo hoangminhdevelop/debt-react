@@ -17,13 +17,14 @@ import CreateHistory from '@/components/forms/CreateHistory/CreateHistory';
 
 import { HistoryType } from '@/types/history';
 import { Order } from '@/types/common';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const History = () => {
   const { id } = useParams();
   const { isAuthenticated } = useAuthContext();
 
   const [historyParams, setHistoryParam] = useState<FilterHistory>({
-    debtId: Number(id),
+    debtId: Number(id) ?? undefined,
     start: startOfDay(startOfMonth(new Date())),
     end: endOfDay(endOfMonth(new Date())),
     order: Order.Desc,
@@ -67,16 +68,21 @@ const History = () => {
         </div>
         <div className="w-full">
           <h2 className="mb-common">History list</h2>
-          <div className="w-full grid gap-3 grid-cols-1 mt-common">
-            {isLoading &&
-              [...new Array(6)].map((_, id) => {
-                return <HistoryItemSkeleton key={id} />;
-              })}
+          <ScrollArea className="mt-common h-[calc(100vh_-_180px)]">
+            <div className="w-full grid gap-3 grid-cols-1 ">
+              {data?.length === 0 && (
+                <b className="text-center">Let's create the first history</b>
+              )}
+              {isLoading &&
+                [...new Array(6)].map((_, id) => {
+                  return <HistoryItemSkeleton key={id} />;
+                })}
 
-            {data?.map((history) => {
-              return <HistoryItem key={history.id} data={history} />;
-            })}
-          </div>
+              {data?.map((history) => {
+                return <HistoryItem key={history.id} data={history} />;
+              })}
+            </div>
+          </ScrollArea>
         </div>
       </div>
     </div>

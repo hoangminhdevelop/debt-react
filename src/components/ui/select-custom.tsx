@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { FormControl } from './form';
 import { ScrollArea } from './scroll-area';
 import {
@@ -37,7 +38,11 @@ const SelectCustom = ({
           </SelectTrigger>
         </FormControl>
         <SelectContent>
-          <ScrollArea className="w-full max-h-[200px]">
+          <ScrollArea
+            className={clsx('w-full', {
+              'h-[200px]': options.length > 5,
+            })}
+          >
             {options.map((option) => {
               return (
                 <SelectItem key={option.label} value={option.value}>
