@@ -3,15 +3,15 @@ import { Card } from '@/components/ui/card';
 import { HistoryType, IHistory } from '@/types/history';
 import { convertToVND } from '@/utils/currency';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getIcon } from '@/helpers/icon';
 import { formatDateTime } from '@/utils/datetime';
+import { getIcon } from '@/helpers/icon';
 
 type HistoryItemProps = {
   data: IHistory;
 };
 
 export const HistoryItem = ({ data }: HistoryItemProps) => {
-  // const { emoji } = getIcon(data.debt.icon);
+  const { emoji } = getIcon(data.debt.icon);
   return (
     <div className="w-full">
       <Card className="p-common flex gap-3 items-start">
@@ -21,7 +21,7 @@ export const HistoryItem = ({ data }: HistoryItemProps) => {
             <b>
               &nbsp;
               {data.debt.debtName}&nbsp;
-              {/* {emoji} */}
+              {emoji}
             </b>
           </span>
           <span>Reason: {data.reason}</span>

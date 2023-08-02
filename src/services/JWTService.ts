@@ -12,7 +12,7 @@ interface RefreshTokenResponse {
 }
 
 let accessToken: string | undefined = undefined;
-let refreshTokenTimeoutId: number | undefined;
+// let refreshTokenTimeoutId: number | undefined;
 
 export const getAccessToken = () => {
   return accessToken;
@@ -31,7 +31,8 @@ export const setAccessToken = (accessTokenInput: string) => {
 
 export const setRefreshTokenTimeOut = (delay: number) => {
   // Send request before token expired 5s
-  refreshTokenTimeoutId = window.setTimeout(
+  //refreshTokenTimeoutId =
+  window.setTimeout(
     () => {
       getRefreshToken();
     },

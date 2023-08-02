@@ -2,15 +2,14 @@ import { HTMLProps } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Card } from '@/components/ui/card';
-import { TDebt } from '@/types/debt';
 import { Skeleton } from '@/components/ui/skeleton';
+import DeleteDebt from '@/components/forms/DeleteDebt';
 
 import { Routers } from '@/routes';
+import { TDebt } from '@/types/debt';
 import { convertToVND } from '@/utils/currency';
 import { cn } from '@/utils/tailwind';
 import { getIcon } from '@/helpers/icon';
-import { X } from 'lucide-react';
-import DeleteDebt from '@/components/forms/DeleteDebt';
 
 type DebtItemProps = Omit<HTMLProps<HTMLDivElement>, 'data'> & {
   data: TDebt;

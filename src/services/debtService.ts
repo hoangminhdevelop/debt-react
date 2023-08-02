@@ -1,4 +1,4 @@
-import { axiosCall, axiosPrivateCall } from './axiosService';
+import { axiosPrivateCall } from './axiosService';
 import { TDebt } from '@/types/debt';
 import { APIResult } from '@/types/service';
 

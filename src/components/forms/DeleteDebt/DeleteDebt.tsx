@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { X } from 'lucide-react';
+import { toast } from 'react-toastify';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -8,11 +12,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+
 import debtService from '@/services/debtService';
 import { TDebt } from '@/types/debt';
-import { useMutation } from '@tanstack/react-query';
-import { X } from 'lucide-react';
-import { toast } from 'react-toastify';
 import {
   DELETE_DEBT_FAILED,
   DELETE_DEBT_SUCCESSFULLY,

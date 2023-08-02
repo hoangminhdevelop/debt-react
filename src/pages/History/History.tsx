@@ -25,8 +25,8 @@ const History = () => {
 
   const [historyParams, setHistoryParam] = useState<FilterHistory>({
     debtId: Number(id) ?? undefined,
-    start: startOfDay(startOfMonth(new Date())),
-    end: endOfDay(endOfMonth(new Date())),
+    start: startOfMonth(new Date()),
+    end: endOfMonth(new Date()),
     order: Order.Desc,
   });
 
@@ -39,8 +39,8 @@ const History = () => {
   const onSubmitFilter = (filterForm: HistoryFilterDataForm) => {
     setHistoryParam({
       ...historyParams,
-      start: filterForm.range.from,
-      end: filterForm.range.to,
+      start: startOfDay(filterForm.range.from),
+      end: endOfDay(filterForm.range.to),
       type: filterForm.type === HistoryType.All ? undefined : filterForm.type,
       order: filterForm.order,
     });

@@ -54,6 +54,7 @@ const CreateHistory = () => {
       const input: CreateHistoryInput = { ...dataForm, debtId: +id };
       await mutateAsync(input);
       toast(CREATE_HISTORY_SUCCESSFULLY, { type: 'success' });
+      setIsOpen(false);
     } catch (error) {
       toast(CREATE_HISTORY_SUCCESSFULLY, { type: 'error' });
     }

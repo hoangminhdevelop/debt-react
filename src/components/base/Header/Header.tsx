@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 
 // -- Components
@@ -18,12 +18,26 @@ const Header = ({ className, ...props }: HeaderProps) => {
       {...props}
     >
       <div className="flex gap-2">
-        <Link to={Routers.Home}>
+        <NavLink
+          to={Routers.Home}
+          className={({ isActive }) => {
+            return isActive
+              ? 'underline decoration-white underline-offset-2'
+              : '';
+          }}
+        >
           <h2 className="text-white">Home</h2>
-        </Link>
-        <Link to={Routers.History}>
+        </NavLink>
+        <NavLink
+          to={Routers.History}
+          className={({ isActive }) => {
+            return isActive
+              ? 'underline decoration-white underline-offset-2'
+              : '';
+          }}
+        >
           <h2 className="text-white">History</h2>
-        </Link>
+        </NavLink>
       </div>
 
       <Profile />
