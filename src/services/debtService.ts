@@ -21,6 +21,11 @@ class DebtService {
     const result = await axiosPrivateCall().get<APIResult<TDebt[]>>('/debt');
     return result.data.data;
   }
+
+  async deleteDebtById(id: number) {
+    const result = await axiosPrivateCall().delete(`/debt/${id}`);
+    return result.data;
+  }
 }
 
 const debtService = new DebtService();

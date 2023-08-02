@@ -3,8 +3,8 @@ import { Card } from '@/components/ui/card';
 import { HistoryType, IHistory } from '@/types/history';
 import { convertToVND } from '@/utils/currency';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getIcon } from '@/helpers/icon';
 import { formatDateTime } from '@/utils/datetime';
+import { getIcon } from '@/helpers/icon';
 
 type HistoryItemProps = {
   data: IHistory;

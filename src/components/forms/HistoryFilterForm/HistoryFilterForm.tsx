@@ -44,7 +44,7 @@ const HistoryFilterForm = ({
             defaultValue={defaultValue.order}
             render={({ field }) => {
               return (
-                <FormItem className="mb-common w-1/3 mr-common">
+                <FormItem className="mb-common w-1/2 md:w-1/3 mr-common">
                   <Label>Order:</Label>
                   <FormControl>
                     <SelectCustom
@@ -64,7 +64,7 @@ const HistoryFilterForm = ({
             defaultValue={defaultValue.type}
             render={({ field }) => {
               return (
-                <FormItem className="mb-common w-1/3">
+                <FormItem className="mb-common w-1/2 md:w-1/3">
                   <Label>type:</Label>
                   <FormControl>
                     <SelectCustom
