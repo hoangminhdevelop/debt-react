@@ -8,8 +8,9 @@ import History from '@/pages/History';
 import CheckAuth from './components/auth/CheckAuth/CheckAuth';
 
 export enum Routers {
-  LandingPage = '/',
-  Home = '/home',
+  Login = '/login',
+  Register = '/register',
+  Home = '/',
   History = '/history',
 }
 
@@ -18,7 +19,11 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: Routers.LandingPage,
+        path: Routers.Login,
+        element: <LandingPage />,
+      },
+      {
+        path: Routers.Register,
         element: <LandingPage />,
       },
       {

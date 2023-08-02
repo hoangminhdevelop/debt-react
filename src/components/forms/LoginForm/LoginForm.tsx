@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
@@ -42,7 +42,7 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <h1 className="text-3xl mb-2">Login</h1>
+      <h1 className="mb-common">Login</h1>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
@@ -64,13 +64,23 @@ const LoginForm = () => {
             <FormItem className="mb-2">
               <Label>Password</Label>
               <FormControl>
-                <Input placeholder="Enter your password" {...field} />
+                <Input
+                  type="password"
+                  placeholder="Enter your password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button>Submit</Button>
+        <Button className="mb-common">Submit</Button>
+        <p className="text-base">
+          You haven't an account.&nbsp;
+          <Link className="text-blue-500" to={Routers.Register}>
+            Register now
+          </Link>
+        </p>
       </form>
     </Form>
   );

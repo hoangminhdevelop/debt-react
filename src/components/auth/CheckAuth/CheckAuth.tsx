@@ -15,7 +15,7 @@ const CheckAuth = ({ children }: CheckAuthProps) => {
   }, []);
 
   if (!isAuthenticated && !isLoading) {
-    return <Navigate to={Routers.LandingPage} />;
+    return <Navigate to={Routers.Login} />;
   } else {
     return <>{children}</>;
   }

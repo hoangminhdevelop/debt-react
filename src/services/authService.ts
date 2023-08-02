@@ -17,6 +17,14 @@ interface RefreshToken {
   token: string;
 }
 class AuthService {
+  async register(input: any) {
+    const { data } = await axiosCall().post<APIResult<UserInfo>>(
+      '/auth/register',
+      input,
+    );
+    return data;
+  }
+
   async login(input: LoginInput) {
     const { data } = await axiosCall().post<APIResult<LoginResult>>(
       '/auth/login',

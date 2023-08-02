@@ -7,3 +7,8 @@ export const DELETE_DEBT_FAILED = 'Delete the debt failed';
 // History messages
 export const CREATE_HISTORY_SUCCESSFULLY = 'Create new record successfully';
 export const CREATE_HISTORY_FAILED = 'Create new record failed';
+
+// Register
+
+export const REGISTER_SUCCESSFULLY = "Register successfully. Let's login";
+export const REGISTER_FAILED = 'Register failed. Try again';
