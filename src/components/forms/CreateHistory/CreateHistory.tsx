@@ -33,6 +33,8 @@ import { HistoryType } from '@/types/history';
 import { CreateHistoryInput, historyService } from '@/services/historyService';
 import { CREATE_HISTORY_SUCCESSFULLY } from '@/constants/message';
 import { HISTORY_TYPE_OPTIONS } from '@/constants/options';
+import queryClient from '@/react-query/queryClient';
+import { GET_HISTORY_LIST_KEY } from '@/react-query/query-keys';
 
 const CreateHistory = () => {
   const { id } = useParams();
@@ -51,10 +53,17 @@ const CreateHistory = () => {
   const onSubmit = async (dataForm: CreateHistorySchema) => {
     if (!id) return;
     try {
+      // send create new record and close modal
       const input: CreateHistoryInput = { ...dataForm, debtId: +id };
       await mutateAsync(input);
-      toast(CREATE_HISTORY_SUCCESSFULLY, { type: 'success' });
+      form.reset();
       setIsOpen(false);
+      toast(CREATE_HISTORY_SUCCESSFULLY, { type: 'success' });
+
+      // refresh history list
+      await queryClient.invalidateQueries({
+        queryKey: [GET_HISTORY_LIST_KEY],
+      });
     } catch (error) {
       toast(CREATE_HISTORY_SUCCESSFULLY, { type: 'error' });
     }
@@ -63,12 +72,12 @@ const CreateHistory = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Create new history</Button>
+        <Button>Create new record</Button>
       </DialogTrigger>
 
       <DialogContent className="top-[30%]">
         <DialogHeader>
-          <DialogTitle>Create the new History</DialogTitle>
+          <DialogTitle>Create the new record</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

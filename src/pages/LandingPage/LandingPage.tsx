@@ -9,6 +9,7 @@ const LandingPage = () => {
   const isMatchRegisterPath = useMatch(Routers.Register);
 
   const { isAuthenticated } = useAuthContext();
+
   if (isAuthenticated) {
     return <Navigate to={Routers.Home} />;
   }

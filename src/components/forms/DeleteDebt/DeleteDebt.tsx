@@ -19,6 +19,8 @@ import {
   DELETE_DEBT_FAILED,
   DELETE_DEBT_SUCCESSFULLY,
 } from '@/constants/message';
+import queryClient from '@/react-query/queryClient';
+import { GET_DEBT_LIST_KEY } from '@/react-query/query-keys';
 
 type DeleteDebtProps = {
   data: TDebt;
@@ -35,6 +37,10 @@ const DeleteDebt = ({ data }: DeleteDebtProps) => {
   const onDelete = async () => {
     try {
       await mutateAsync(data.id);
+
+      await queryClient.invalidateQueries({
+        queryKey: [GET_DEBT_LIST_KEY],
+      });
 
       toast(DELETE_DEBT_SUCCESSFULLY, {
         type: 'success',

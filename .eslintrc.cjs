@@ -11,6 +11,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react-hooks/recommended',
     'prettier',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -19,7 +20,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ['react-refresh', 'prettier'],
+  plugins: ['react-refresh', 'prettier', '@tanstack/query'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -34,4 +35,6 @@ module.exports = {
   'no-process-exit': 'off',
   'object-shorthand': 'off',
   'class-methods-use-this': 'off',
+  '@tanstack/query/exhaustive-deps': 'error',
+  '@tanstack/query/prefer-query-object-syntax': 'error',
 };

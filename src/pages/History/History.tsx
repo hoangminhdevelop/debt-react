@@ -18,6 +18,7 @@ import CreateHistory from '@/components/forms/CreateHistory/CreateHistory';
 import { HistoryType } from '@/types/history';
 import { Order } from '@/types/common';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { GET_HISTORY_LIST_KEY } from '@/react-query/query-keys';
 
 const History = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const History = () => {
   });
 
   const { data, isLoading } = useQuery({
-    queryKey: ['query-history', historyParams],
+    queryKey: [GET_HISTORY_LIST_KEY, historyParams],
     queryFn: () => historyService.getHistoryList(historyParams),
     enabled: isAuthenticated,
   });
@@ -71,7 +72,7 @@ const History = () => {
           <ScrollArea className="mt-common h-[calc(100vh_-_180px)]">
             <div className="w-full grid gap-3 grid-cols-1 ">
               {data?.length === 0 && (
-                <b className="text-center">Let's create the first history</b>
+                <b className="text-center">Let's create the first record</b>
               )}
               {isLoading &&
                 [...new Array(6)].map((_, id) => {

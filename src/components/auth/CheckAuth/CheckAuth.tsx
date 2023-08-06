@@ -11,6 +11,7 @@ const CheckAuth = ({ children }: CheckAuthProps) => {
   const { isAuthenticated, isLoading, checkAuth } = useAuthContext();
 
   useEffect(() => {
+    if (isLoading) return;
     checkAuth(); // Trigger the authentication check on component mount
   }, []);
 

@@ -36,19 +36,11 @@ export const router = createBrowserRouter([
       },
       {
         path: `${Routers.History}`,
-        element: (
-          <CheckAuth>
-            <History />
-          </CheckAuth>
-        ),
+        element: <History />,
       },
       {
         path: `${Routers.History}/:id`,
-        element: (
-          <CheckAuth>
-            <History />
-          </CheckAuth>
-        ),
+        element: <History />,
       },
     ],
   },

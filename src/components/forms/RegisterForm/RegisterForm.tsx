@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 
 import {
@@ -21,6 +21,8 @@ import { REGISTER_FAILED, REGISTER_SUCCESSFULLY } from '@/constants/message';
 import { RegisterFormData, registerFormSchema } from './register-form-schema';
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+
   const { mutateAsync } = useMutation({
     mutationFn: authService.register,
   });
@@ -39,6 +41,7 @@ const RegisterForm = () => {
           password: formData.password,
         });
       }
+      navigate(Routers.Home);
     } catch (error) {
       toast(REGISTER_FAILED, { type: 'error' });
     }
@@ -119,7 +122,7 @@ const RegisterForm = () => {
         <p className="text-base">
           You haven an account.&nbsp;
           <Link className="text-blue-500" to={Routers.Login}>
-            Register now
+            Login now
           </Link>
         </p>
       </form>

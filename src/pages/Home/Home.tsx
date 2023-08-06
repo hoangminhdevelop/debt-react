@@ -4,13 +4,14 @@ import { DebtItemSkeleton, DebtItem } from '@/components/debt/DebtItem';
 import CreateDebt from '@/components/forms/CreateDebt';
 import debtService from '@/services/debtService';
 import { useAuthContext } from '@/contexts/auth-context/useAuthContext';
+import { GET_DEBT_LIST_KEY } from '@/react-query/query-keys';
 
 // -- Components --
 
 const Home = () => {
   const { isAuthenticated } = useAuthContext();
   const { data, isLoading } = useQuery({
-    queryKey: ['query-debt-list'],
+    queryKey: [GET_DEBT_LIST_KEY],
     queryFn: debtService.getDebtList,
     enabled: isAuthenticated,
   });

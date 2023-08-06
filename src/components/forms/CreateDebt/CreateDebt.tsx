@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,7 +27,6 @@ import { Input } from '@/components/ui/input';
 import SelectCustom from '@/components/ui/select-custom';
 
 // -- Utils  --
-
 import { CreateDebtSchema, createDebtSchema } from './CreateDebt.schema';
 import debtService, { CreateDebtInput } from '@/services/debtService';
 import { iconOptions } from '@/constants/icons';
@@ -34,7 +34,8 @@ import {
   CREATE_DEBT_FAILED,
   CREATE_DEBT_SUCCESSFULLY,
 } from '@/constants/message';
-import { useState } from 'react';
+import queryClient from '@/react-query/queryClient';
+import { GET_DEBT_LIST_KEY } from '@/react-query/query-keys';
 
 const CreateDebt = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,16 +48,25 @@ const CreateDebt = () => {
     },
   });
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationKey: ['create-debt'],
     mutationFn: (input: CreateDebtInput) => debtService.createDebt(input),
   });
 
   const onSubmit = async (dataForm: CreateDebtSchema) => {
     try {
-      mutate(dataForm);
+      // send new debt and close modal, reset form
+      await mutateAsync(dataForm);
       setIsOpen(false);
+      form.reset();
+
+      // send toast success
       toast(CREATE_DEBT_SUCCESSFULLY, { type: 'success' });
+
+      // refresh debt list
+      await queryClient.invalidateQueries({
+        queryKey: [GET_DEBT_LIST_KEY],
+      });
     } catch (error) {
       toast(CREATE_DEBT_FAILED, { type: 'error' });
     }
