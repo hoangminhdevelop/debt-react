@@ -1,4 +1,4 @@
-import { axiosCall } from './axiosService';
+import { axiosCall, axiosPrivateCall } from './axiosService';
 import { UserInfo } from '@/types/auth';
 import { APIResult } from '@/types/service';
 import { AxiosResponse } from 'axios';
@@ -16,35 +16,35 @@ interface LoginResult {
 interface RefreshToken {
   token: string;
 }
-class AuthService {
-  async register(input: any) {
-    const { data } = await axiosCall().post<APIResult<UserInfo>>(
-      '/auth/register',
-      input,
-    );
-    return data;
-  }
 
-  async login(input: LoginInput) {
-    const { data } = await axiosCall().post<APIResult<LoginResult>>(
-      '/auth/login',
-      input,
-      {
-        withCredentials: true,
-      },
-    );
-
-    setAccessToken(data.data.token);
-
-    return data;
-  }
-
-  async refreshToken() {
-    return await axiosCall().get<AxiosResponse<RefreshToken>>(
-      '/auth/refreshToken',
-    );
-  }
+export async function register(input: any) {
+  const { data } = await axiosCall().post<APIResult<UserInfo>>(
+    '/auth/register',
+    input,
+  );
+  return data;
 }
 
-const authService = new AuthService();
-export default authService;
+export async function login(input: LoginInput) {
+  const { data } = await axiosCall().post<APIResult<LoginResult>>(
+    '/auth/login',
+    input,
+    {
+      withCredentials: true,
+    },
+  );
+
+  setAccessToken(data.data.token);
+
+  return data;
+}
+
+export async function refreshToken() {
+  return await axiosCall().get<AxiosResponse<RefreshToken>>(
+    '/auth/refreshToken',
+  );
+}
+
+export function logout() {
+  return axiosPrivateCall().post('/auth/logout', {}, { withCredentials: true });
+}

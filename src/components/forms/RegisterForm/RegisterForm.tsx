@@ -16,7 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 import { Routers } from '@/routes';
-import authService from '@/services/authService';
+import { register, login } from '@/services/authService';
 import { REGISTER_FAILED, REGISTER_SUCCESSFULLY } from '@/constants/message';
 import { RegisterFormData, registerFormSchema } from './register-form-schema';
 
@@ -24,7 +24,7 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const { mutateAsync } = useMutation({
-    mutationFn: authService.register,
+    mutationFn: register,
   });
 
   const form = useForm<RegisterFormData>({
@@ -36,7 +36,7 @@ const RegisterForm = () => {
       const data = await mutateAsync(formData);
       if (data.success) {
         toast(REGISTER_SUCCESSFULLY, { type: 'success' });
-        await authService.login({
+        await login({
           username: formData.username,
           password: formData.password,
         });

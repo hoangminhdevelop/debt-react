@@ -16,7 +16,7 @@ import { Label } from '@/components/ui/label';
 import { Routers } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginFormSchema, loginSchema } from './LoginForm.schema';
-import authService from '@/services/authService';
+import { login } from '@/services/authService';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const LoginForm = () => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: authService.login,
+    mutationFn: login,
     onSuccess() {
       navigate(Routers.Home);
     },

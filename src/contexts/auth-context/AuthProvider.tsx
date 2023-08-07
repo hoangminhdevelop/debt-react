@@ -21,16 +21,18 @@ interface IAuthContext {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   checkAuth: () => Promise<void>;
+  clearAuthenticated: () => void;
   user: UserInfo | undefined;
   isLoading: boolean;
 }
 
 export const AuthContext = createContext<IAuthContext>({
-  isAuthenticated: false,
-  setIsAuthenticated: () => {},
-  checkAuth: () => Promise.resolve(),
   user: undefined,
   isLoading: false,
+  isAuthenticated: false,
+  checkAuth: () => Promise.resolve(),
+  clearAuthenticated: () => {},
+  setIsAuthenticated: () => {},
 });
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
@@ -60,16 +62,22 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const clearAuthenticated = () => {
+    setUser(undefined);
+    setIsAuthenticated(false);
+  };
+
   useEffect(() => {
     checkAuth();
   }, []);
 
   const value = {
     user,
+    isLoading,
     isAuthenticated,
     setIsAuthenticated,
     checkAuth,
-    isLoading,
+    clearAuthenticated,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
